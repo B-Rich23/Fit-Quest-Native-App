@@ -1,77 +1,94 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import MapView, { Polyline } from 'react-native-maps';
+import React, { Component } from 'react';
+import { Platform, StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 
-export default class App extends React.Component {
+
+import { Header, ButtonGroup, Button, Avatar, List, ListItem, Card, Input, Icon } from 'react-native-elements';
+
+const instructions = Platform.select({
+    ios: 'Press Cmd+R to reload,\n' +
+      'Cmd+D or shake for dev menu',
+    android: 'Double tap R on your keyboard to reload,\n' +
+      'Shake or press menu button for dev menu',
+  });
+
+type Props = {};
+export default class App extends Component<Props> {
+constructor () {
+  super()
+  this.state = {
+    selectedIndex: 2
+  }
+  this.updateIndex = this.updateIndex.bind(this)
+}
+updateIndex (selectedIndex) {
+  this.setState({selectedIndex})
+}
   render() {
+  const buttons = ['Home', 'Past Quest', 'Next Quest', 'Stats']
+  const { selectedIndex } = this.state
+  const list = [
+  {
+    title: 'Steps',
+    value: '2,867'
+  },
+  {
+    title: 'Distance',
+    value: '1 mile'
+  },
+  {
+    title: 'Elevation',
+    value: '1 mile'
+  },
+  {
+    title: 'Time',
+    value: '30 mins'
+  },
+  {
+    title: 'Avg Speed',
+    value: '10 mph'
+  }
+  
+]
     return (
       <View style={styles.container}>
-        <MapView style={styles.map}
-          region={{
-            latitude: 37.8715926,
-            longitude: -122.272747,
-            latitudeDelta: 0.1,
-            longitudeDelta: 0.1
-          }}
-        >
-
-          <Polyline
-            coordinates={[
-              { latitude: 37.8715259, longitude: -122.272747},
-              { latitude: 37.8835259, longitude: -122.262747},
-              { latitude: 37.8905209, longitude: -122.256168 },
-              { latitude: 37.8985259, longitude: -122.242747 },
-              { latitude: 37.9055259, longitude: -122.234727 },
-              { latitude: 37.9167342, longitude: -122.221004 }
-            ]}
-            strokeColor="#ee2525" // fallback for when `strokeColors` is not supported by the map-provider
-            strokeColors={[
-              '#7F0000',
-              '#00000000', // no color, creates a "long" gradient between the previous and next coordinate
-              '#B24112',
-              '#E5845C',
-              '#238C23',
-              '#7F0000'
-            ]}
-            strokeWidth={3}
-          />
-
-          <MapView.Marker 
-            coordinate={{
-              latitude: 37.8720355,
-              longitude: -122.27125799999999
-            }}
-            title={'Berkeley Extension FitQuest Yeah!'}
-            description={'It where the fittest Quest'}
-            image={require("./assets/wizardHat.png")}
-            style="marker"
-            />
-        </MapView>
+         <Card containerStyle={{flexDirection: 'row', width: "100%",
+            height: 80, backgroundColor: 'rgba(49, 111,244, 1)',
+            borderColor: 'rgba(49, 111,244, 1)', justifyContent: 'space-around',
+            alignItems: 'stretch', marginTop: 0
+            }}> 
+              <Header
+                  statusBarProps={{ barStyle: 'light-content' }}
+                  centerComponent={{ text: 'FitQuest', style: { color: '#fff',
+                  fontWeight: 'bold', fontSize: 20, marginTop: 10 } }}
+                  outerContainerStyles={{ backgroundColor: 'rgba(49, 111,244, 1)',
+                   flexDirection: 'row', borderColor: 'rgba(49, 111,244, 1)',
+                   width: '100%', justifyContent: 'space-around', alignItems: 'center' }}
+                  innerContainerStyles={{ justifyContent: 'space-between' }}/>
+              
+            </Card>
+            
+                <ButtonGroup
+                  onPress={this.updateIndex}
+                  selectedIndex={selectedIndex}
+                  buttons={buttons}
+                  buttonStyle={{justifyContent: 'center', width: '100%'}}
+                  containerStyle={{height: 70, width: '100%',
+                  backgroundColor: 'rgba(49, 111,244, 1)',
+                  justifyContent: 'flex-start', marginTop: 0}}
+                  textStyle={{color: 'white', fontWeight: 'bold'}}
+                />
+  
+        
       </View>
     );
   }
 }
-
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
-    top: 0, 
-    left: 0, 
-    bottom: 0, 
-    right: 0, 
-    justifyContent: 'flex-end', 
-    alignItems: 'center'
-  },
-  map:{
-    position: 'absolute',
-    top: 0, 
-    left: 0, 
-    bottom: 0, 
-    right: 0
-  },
-  marker:{
-    height: 10, 
-    width: 10
+    flex: 1,
+    backgroundColor: 'rgba(134, 249, 5, 1))',
+    alignItems: 'center',
+    justifyContent: "flex-start"
+    
   }
-
 });

@@ -1,0 +1,20 @@
+patch-package
+--- a/node_modules/react-native-maps/index.js
++++ b/node_modules/react-native-maps/index.js
+@@ -1,4 +1,4 @@
+-import MapView from './lib/components/MapView';
++import  MapView  from './lib/components/MapView';
+ 
+ export { default as Marker } from './lib/components/MapMarker.js';
+ export { default as Polyline } from './lib/components/MapPolyline.js';
+@@ -9,7 +9,9 @@ export { default as LocalTile } from './lib/components/MapLocalTile.js';
+ export { default as Overlay } from './lib/components/MapOverlay.js';
+ export { default as Callout } from './lib/components/MapCallout.js';
+ export { default as AnimatedRegion } from './lib/components/AnimatedRegion.js';
+-export { Animated, ProviderPropType, MAP_TYPES } from './lib/components/MapView.js';
++export const Animated = MapView.Animated;
++export const ProviderPropType = MapView.ProviderPropType;
++export const MAP_TYPES = MapView.MAP_TYPES;
+ export const PROVIDER_GOOGLE = MapView.PROVIDER_GOOGLE;
+ export const PROVIDER_DEFAULT = MapView.PROVIDER_DEFAULT;
+ 

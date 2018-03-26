@@ -12,6 +12,7 @@ import {
   View
 } from 'react-native';
 
+
 import { CameraKitCameraScreen } from 'react-native-camera-kit';
 
 import MapView from 'react-native-maps';
@@ -30,7 +31,7 @@ type Props = {};
 export default class App extends Component<Props> {
   render() {
     return (
-      <CameraKitCameraScreen
+        <CameraKitCameraScreen
           actions={{ rightButtonText: 'Done', leftButtonText: 'Cancel' }}
           onBottomButtonPressed={(event) => this.onBottomButtonPressed(event)}
           scanBarcode={true}

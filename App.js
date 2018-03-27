@@ -4,7 +4,11 @@ import { SensorManager } from 'NativeModules';
 import RNSensors from 'react-native-sensors';
 import { Header, ButtonGroup, Button, Avatar, List, ListItem, Card, Input, Icon } from 'react-native-elements';
 import PropTypes from 'prop-types';
-
+/////////
+////////   Android sensors
+/////////
+// const React = require('react-native');
+const Pedometer = require('./Pedometer');
 const {Accelerometer, Gyroscope, Orientation, StepCounter, Thermometer} = RNSensors;
 const { Magnetometer } = require('NativeModules');
 const accelerationObservable = new Accelerometer({
@@ -13,20 +17,13 @@ const accelerationObservable = new Accelerometer({
 const gyroscopeObservable = new Gyroscope({
   updateInterval:200,
 });
-// const magnetometerObservable = new Magnetometer({
-//   updateInterval:1000,
-// });
-// const stepCountObservable  = new StepCounter({
-//   // updateInterval:5000,
-// });
 
 
 type Props = {};
 export default class App extends Component<Props> {
 constructor () {
   super()
-  // let x,y,z
-  // let acceleration = {}
+  
   this.state = {
     selectedIndex: 2,
     stepCount: 0,
@@ -61,12 +58,7 @@ componentDidMount(){
   gyroscopeObservable.subscribe(gyroscope => this.setState({
     gyroscope,
   }));
-  // magnetometerObservable.subscribe(magnetometer => this.setState({
-  //   magnetometer,
-  // }));
-  // stepCountObservable.subscre(stepcounter => this.setState({
-  //   stepcounter,
-  // }));
+ 
 }  
 
 
@@ -152,6 +144,11 @@ componentDidMount(){
         
       </View>
     );
+    ////////
+    /////// Android StepCounter
+    ///////
+
+    
   }
 }
 const styles = StyleSheet.create({

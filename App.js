@@ -1,56 +1,95 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
 import {
-  Platform,
+  AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
+  TouchableOpacity,
+  AlertIOS
 } from 'react-native';
 
-import { CameraKitCameraScreen } from 'react-native-camera-kit';
+import CameraKitCamera from './src/CameraKitCamera';
 
-import MapView from 'react-native-maps';
+import CameraScreen from './src/CameraScreen';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+class example extends Component {
 
-//const isCameraAuthorized = await CameraKitCamera.checkDeviceCameraAuthorizationStatus();
-//const isUserAuthorizedCamera = await CameraKitCamera.requestDeviceCameraAuthorization();
+  constructor(props) {
+    super(props);
+    this.state = {
+      example: undefined
+    };
+  }
 
-type Props = {};
-export default class App extends Component<Props> {
   render() {
+    if (this.state.example) {
+      const Example = this.state.example;
+      return <Example />;
+    }
     return (
-      <CameraKitCameraScreen
-          actions={{ rightButtonText: 'Done', leftButtonText: 'Cancel' }}
-          onBottomButtonPressed={(event) => this.onBottomButtonPressed(event)}
-          scanBarcode={true}
-          laserColor={"blue"}
-          frameColor={"yellow"}
+      <View style={{ flex: 1 }}>
+        <View style={styles.headerContainer}>
+          <Text style={styles.headerText}>
+            Welcome to Camera Kit
+          </Text>
+          <Text style={{ fontSize: 40 }}>📷</Text>
+        </View>
+        <View>
+          <TouchableOpacity onPress={() => this.setState({ example: CameraScreen })}>
+            <Text style={styles.buttonText}>
+              Camera Screen
+            </Text>
+          </TouchableOpacity>
 
-          onReadQRCode={((event) => Alert.alert("Qr code found"))} //optional
-          hideControls={false}           //(default false) optional, hide buttons and additional controls on top and bottom of screen
-          showFrame={true}   //(default false) optional, show frame with transparent layer (qr code or barcode will be read on this area ONLY), start animation for scanner,that stoped when find any code. Frame always at center of the screen
-          offsetForScannerFrame = {10}   //(default 30) optional, offset from left and right side of the screen
-          heightForScannerFrame = {300}  //(default 200) optional, change height of the scanner frame
-          colorForScannerFrame = {'red'} //(default white) optional, change colot of the scanner frame
-      />
+          <TouchableOpacity onPress={() => this.onCheckCameraAuthoPressed()}>
+            <Text style={styles.buttonText}>
+              Camera Autotization Status
+            </Text>
+          </TouchableOpacity>
+
+        </View>
+
+      </View>
+
     );
   }
+
+  async onCheckCameraAuthoPressed() {
+    const success = await CameraKitCamera.checkDeviceCameraAuthorizationStatus();
+    if (success) {
+      AlertIOS.alert('You have permission 🤗')
+    }
+    else {
+      AlertIOS.alert('No permission 😳')
+    }
+  }
+
 }
 
 const styles = StyleSheet.create({
   container: {
-    height: '100%',
-    width: '100%'
+    flex: 1,
+    justifyContent: 'center',
+    paddingTop: 60,
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
   },
+  headerContainer: {
+    flexDirection: 'column',
+    backgroundColor: '#F5FCFF',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 100
+  },
+  headerText: {
+    color: 'black',
+    fontSize: 24
+  },
+  buttonText: {
+    color: 'blue',
+    marginBottom: 20,
+    fontSize: 20
+  }
 });
+
+AppRegistry.registerComponent('CameraKit', () => example);

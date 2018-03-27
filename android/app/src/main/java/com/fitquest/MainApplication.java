@@ -3,12 +3,14 @@ package com.fitquest;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.sensors.RNSensorsPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.airbnb.android.react.maps.MapsPackage;
 import com.wix.RNCameraKit.RNCameraKitPackage;
+import com.sensormanager.SensorManagerPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,8 +27,10 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
           return Arrays.<ReactPackage>asList(
               new MainReactPackage(),
+            new RNSensorsPackage(),
               new MapsPackage(),
-              new RNCameraKitPackage()
+              new RNCameraKitPackage(),
+              new SensorManagerPackage()  
           );
         }
 

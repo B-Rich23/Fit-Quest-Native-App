@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, TouchableHighlight } from 'react-native';
-
-
+import { Platform, StyleSheet, Text, View, TouchableHighlight, DeviceEventEmitter } from 'react-native';
+import { SensorManager } from 'NativeModules';
+import RNSensors from 'react-native-sensors';
 import { Header, ButtonGroup, Button, Avatar, List, ListItem, Card, Input, Icon } from 'react-native-elements';
+import PropTypes from 'prop-types';
 
+const {Accelerometer, Gyroscope} = RNSensors;
+const accelerationObservable = new Accelerometer({
+  updateInterval:100,
+});
 const instructions = Platform.select({
     ios: 'Press Cmd+R to reload,\n' +
       'Cmd+D or shake for dev menu',
@@ -15,15 +20,35 @@ type Props = {};
 export default class App extends Component<Props> {
 constructor () {
   super()
+  let x,y,z
+  let acceleration = {}
   this.state = {
-    selectedIndex: 2
+    selectedIndex: 2,
+    acceleration:{
+      x:0,
+      y:0,
+      z:0
+    }
   }
   this.updateIndex = this.updateIndex.bind(this)
+  
+  
 }
 updateIndex (selectedIndex) {
   this.setState({selectedIndex})
+};
+
+componentDidMount(){
+  accelerationObservable.subscribe(acceleration => this.setState({
+    acceleration,
+  }));
 }
+
   render() {
+    const {
+      acceleration,
+      gyroscope
+    }  = this.state;
   const buttons = ['Home', 'Past Quest', 'Next Quest', 'Stats']
   const { selectedIndex } = this.state
   const list = [
@@ -47,8 +72,8 @@ updateIndex (selectedIndex) {
     title: 'Avg Speed',
     value: '10 mph'
   }
-  
-]
+  ]
+
     return (
       <View style={styles.container}>
          <Card containerStyle={{flexDirection: 'row', width: "100%",
@@ -77,7 +102,13 @@ updateIndex (selectedIndex) {
                   justifyContent: 'flex-start', marginTop: 0}}
                   textStyle={{color: 'white', fontWeight: 'bold'}}
                 />
-  
+        <Text>
+                Acceleration:
+              </Text>
+              <Text>
+                {this.state.acceleration.x + '/' + this.state.acceleration.y + '/' + this.state.acceleration.z}
+              </Text>
+
         
       </View>
     );

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, TouchableHighlight } from 'react-native';
-
-
 import { Header, ButtonGroup, Button, Avatar, List, ListItem, Card, Input, Icon } from 'react-native-elements';
+// import MapView, { Polyline } from 'react-native-maps';
+import { Map } from "./Maps.js";
 
 const instructions = Platform.select({
     ios: 'Press Cmd+R to reload,\n' +
@@ -52,7 +52,7 @@ updateIndex (selectedIndex) {
     return (
       <View style={styles.container}>
          <Card containerStyle={{flexDirection: 'row', width: "100%",
-            height: 80, backgroundColor: 'rgba(49, 111,244, 1)',
+            height: 60, backgroundColor: 'rgba(49, 111,244, 1)',
             borderColor: 'rgba(49, 111,244, 1)', justifyContent: 'space-around',
             alignItems: 'stretch', marginTop: 0
             }}> 
@@ -64,7 +64,6 @@ updateIndex (selectedIndex) {
                    flexDirection: 'row', borderColor: 'rgba(49, 111,244, 1)',
                    width: '100%', justifyContent: 'space-around', alignItems: 'center' }}
                   innerContainerStyles={{ justifyContent: 'space-between' }}/>
-              
             </Card>
             
                 <ButtonGroup
@@ -77,9 +76,17 @@ updateIndex (selectedIndex) {
                   justifyContent: 'flex-start', marginTop: 0}}
                   textStyle={{color: 'white', fontWeight: 'bold'}}
                 />
-  
+           
+           <Card containerStyle={{flexDirection: 'row', width: "100%",
+            height: 20, backgroundColor: 'rgba(49, 111,244, 1)',
+            borderColor: 'rgba(49, 111,244, 1)', justifyContent: 'space-around',
+            alignItems: 'stretch', marginTop: 0
+            }}>
+              <Map style2={styles2.container} />
+            </Card>
+
         
-      </View>
+      </View>  
     );
   }
 }
@@ -91,4 +98,11 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start"
     
   }
+});
+
+const styles2 = StyleSheet.create({
+  container: {
+    height: '20%',
+    width: '100%'
+  },
 });

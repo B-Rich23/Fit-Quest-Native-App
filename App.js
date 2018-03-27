@@ -102,7 +102,7 @@ componentDidMount(){
                   justifyContent: 'flex-start', marginTop: 0}}
                   textStyle={{color: 'white', fontWeight: 'bold'}}
                 />
-        <Text>
+              <Text>
                 Acceleration:
               </Text>
               <Text>

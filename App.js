@@ -126,19 +126,19 @@ componentDidMount(){
                 Acceleration:
               </Text>
               <Text>
-                {'x: ' + this.state.acceleration.x.toFixed(10) + '\ny: ' + this.state.acceleration.y.toFixed(10) + '\nz: ' + this.state.acceleration.z.toFixed(10)}
+                {'x: ' + this.state.acceleration.x.toFixed(5) + ' y: ' + this.state.acceleration.y.toFixed(5) + 'z: ' + this.state.acceleration.z.toFixed(5)}
               </Text></Card>  
               <Card><Text>
                 Gyroscope:
               </Text>
               <Text>
-                {'x: ' + this.state.gyroscope.x.toFixed(10) + '\ny: ' + this.state.gyroscope.y.toFixed(10) + '\nz: ' + this.state.gyroscope.z.toFixed(10)}
+                {'x: ' + this.state.gyroscope.x.toFixed(5) + 'y: ' + this.state.gyroscope.y.toFixed(5) + 'z: ' + this.state.gyroscope.z.toFixed(5)}
               </Text></Card> 
               <Card><Text>
                 Magnetometer:
               </Text>
               <Text>
-                {'x: ' + this.state.magnetometer.x.toFixed(10) + '\ny: ' + this.state.magnetometer.y.toFixed(10) + '\nz: ' + this.state.magnetometer.z.toFixed(10)}
+                {'x: ' + this.state.magnetometer.x.toFixed(5) + 'y: ' + this.state.magnetometer.y.toFixed(5) + 'z: ' + this.state.magnetometer.z.toFixed(5)}
               </Text></Card> 
 
         

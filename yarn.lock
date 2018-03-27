@@ -4522,12 +4522,22 @@ react-native-elements@^0.19.0:
     opencollective "^1.0.3"
     prop-types "^15.5.8"
 
+react-native-in-app-notification@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-in-app-notification/-/react-native-in-app-notification-2.2.0.tgz#690a9ef75bd0eecc15de77468f009a762c9f1748"
+  dependencies:
+    react-native-swipe-gestures "^1.0.2"
+
 react-native-maps@^0.20.1:
   version "0.20.1"
   resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-0.20.1.tgz#b5247a9a26446b2e1ffc3f680db8ba6ccc960096"
   dependencies:
     babel-plugin-module-resolver "^2.3.0"
     babel-preset-react-native "1.9.0"
+
+react-native-pedometer@0.0.7:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/react-native-pedometer/-/react-native-pedometer-0.0.7.tgz#044e0c1327af58ddec0e887f189dcc8e6f2555d0"
 
 react-native-sensor-manager@^0.1.10:
   version "0.1.10"
@@ -4538,6 +4548,10 @@ react-native-sensors@^2.4.2:
   resolved "https://registry.yarnpkg.com/react-native-sensors/-/react-native-sensors-2.4.2.tgz#557412ad4cafeea115856e694b7cd5f504b31e03"
   dependencies:
     rxjs "^5.0.2"
+
+react-native-swipe-gestures@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-swipe-gestures/-/react-native-swipe-gestures-1.0.2.tgz#914e1a72a94bc55b322b4622a01103ab879296dd"
 
 react-native-vector-icons@^4.5.0:
   version "4.5.0"

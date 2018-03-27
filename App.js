@@ -2,15 +2,16 @@ import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, TouchableHighlight, DeviceEventEmitter } from 'react-native';
 import { SensorManager } from 'NativeModules';
 import RNSensors from 'react-native-sensors';
+import Notification from 'react-native-in-app-notification';
 import { Header, ButtonGroup, Button, Avatar, List, ListItem, Card, Input, Icon } from 'react-native-elements';
-import PropTypes from 'prop-types';
+import { PropTypes } from 'prop-types';
 /////////
 ////////   Android sensors
 /////////
-// const React = require('react-native');
+const ReactN = require('react-native');
 const Pedometer = require('./Pedometer');
-const {Accelerometer, Gyroscope, Orientation, StepCounter, Thermometer} = RNSensors;
-const { Magnetometer } = require('NativeModules');
+const {Accelerometer, Gyroscope, Orientation, StepCounter, Thermometer} =  RNSensors ;
+
 const accelerationObservable = new Accelerometer({
   updateInterval:100,
 });
@@ -26,7 +27,15 @@ constructor () {
   
   this.state = {
     selectedIndex: 2,
-    stepCount: 0,
+    // stepCount: 0,
+    // startDate: null,
+    // endDate: null,
+    // numberOfSteps: 0,
+    // distance: 0,
+    // floorsAscended: 0,
+    // floorsDescended: 0,
+    // currentPace: 0,
+    // currentCadence: 0,
     acceleration:{
       x:0,
       y:0,
@@ -36,12 +45,8 @@ constructor () {
       x:0,
       y:0,
       z:0
-    },
-    magnetometer:{
-      x:0,
-      y:0,
-      z:0
     }
+    
   }
   this.updateIndex = this.updateIndex.bind(this)
   
@@ -58,6 +63,7 @@ componentDidMount(){
   gyroscopeObservable.subscribe(gyroscope => this.setState({
     gyroscope,
   }));
+  
  
 }  
 
@@ -65,34 +71,12 @@ componentDidMount(){
   render() {
     const {
       acceleration,
-      gyroscope,
-      magnetometer,
-      stepcounter
+      gyroscope
+      
     }  = this.state;
-  const buttons = ['Home', 'Past Quest', 'Next Quest', 'Stats']
-  const { selectedIndex } = this.state
-  const list = [
-  {
-    title: 'Steps',
-    value: '2,867'
-  },
-  {
-    title: 'Distance',
-    value: '1 mile'
-  },
-  {
-    title: 'Elevation',
-    value: '1 mile'
-  },
-  {
-    title: 'Time',
-    value: '30 mins'
-  },
-  {
-    title: 'Avg Speed',
-    value: '10 mph'
-  }
-  ]
+    const buttons = ['Home', 'Past Quest', 'Next Quest', 'Stats']
+    const { selectedIndex } = this.state
+  
 
     return (
       <View style={styles.container}>
@@ -134,19 +118,73 @@ componentDidMount(){
               <Text>
                 {'x: ' + this.state.gyroscope.x.toFixed(5) + 'y: ' + this.state.gyroscope.y.toFixed(5) + 'z: ' + this.state.gyroscope.z.toFixed(5)}
               </Text></Card> 
-              <Card><Text>
-                Magnetometer:
-              </Text>
-              <Text>
-                {'x: ' + this.state.magnetometer.x.toFixed(5) + 'y: ' + this.state.magnetometer.y.toFixed(5) + 'z: ' + this.state.magnetometer.z.toFixed(5)}
-              </Text></Card> 
+              
+              {/* <Card>
+                <Text >
+                  {this.state.numberOfSteps}
+                </Text>
+                <Text>
+                  You walked {this.state.numberOfSteps} step{this.state.numberOfSteps==1 ? '' : 's'}, or about {this.state.distance} meters.
+                </Text>
+                <Text>
+                  You went up {this.state.floorsAscended} floor{this.state.floorsAscended==1 ? '' : 's'}, and down {this.state.floorsDescended}.
+                </Text>
+              </Card> */}
+              <Text>This is my app</Text>
+               <TouchableHighlight
+                onPress={this.notification && this.notification.show({
+                  title: 'You pressed it!',
+                  message: 'The notification has been triggered',
+                  onPress: () => Alert.alert('Alert', 'You clicked the notification!'),
+                })}
+              >
+              <Text>Click me to trigger a notification</Text>
+              </TouchableHighlight>
+              <Notification ref={(ref) => { this.notification = ref; }} />
 
         
       </View>
+
+      
     );
     ////////
     /////// Android StepCounter
     ///////
+    // const {
+    //   AppRegistry,
+    //   StyleSheet,
+    //   Text,
+    //   View,
+    // } = ReactN;
+
+    // const reactNativePedometer = ReactN.createClass({
+    //   getInitialState() {
+    //       return {
+    //         startDate: null,
+    //         endDate: null,
+    //         numberOfSteps: 0,
+    //         distance: 0,
+    //         floorsAscended: 0,
+    //         floorsDescended: 0,
+    //         currentPace: 0,
+    //         currentCadence: 0,
+    //       };
+    //     },
+    //     componentDidMount() {
+    //       this._startUpdates();
+    //     },
+       
+    
+    //   _startUpdates() {
+    //     const today = new Date();
+    //     today.setHours(0,0,0,0);
+    
+    //     Pedometer.startPedometerUpdatesFromDate(today.toTime(), (motionData) => {
+    //       console.log("motionData: " + motionData);
+    //       this.setState(motionData);
+    //     });
+    //   },
+    // });  
 
     
   }
@@ -158,5 +196,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: "flex-start"
     
-  }
+  },
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
+  },
+  instructions: {
+    textAlign: 'center',
+    color: '#333333',
+    marginBottom: 5,
+  },
 });

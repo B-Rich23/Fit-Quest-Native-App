@@ -1,9 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React from 'react';
 import {
   Platform,
@@ -12,19 +6,7 @@ import {
   View
 } from 'react-native';
 
-// import { CameraKitCameraScreen } from 'react-native-camera-kit';
-
 import MapView, { Polyline } from 'react-native-maps';
-
-// const instructions = Platform.select({
-//   ios: 'Press Cmd+R to reload,\n' +
-//     'Cmd+D or shake for dev menu',
-//   android: 'Double tap R on your keyboard to reload,\n' +
-//     'Shake or press menu button for dev menu',
-// });
-
-//const isCameraAuthorized = await CameraKitCamera.checkDeviceCameraAuthorizationStatus();
-//const isUserAuthorizedCamera = await CameraKitCamera.requestDeviceCameraAuthorization();
 
 export class Map extends React.Component {
   render() {
@@ -64,7 +46,7 @@ export class Map extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    height: '60%',
+    height: '40%',
     width: '100%'
   },
 });

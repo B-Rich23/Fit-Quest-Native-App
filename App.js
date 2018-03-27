@@ -26,29 +26,6 @@ updateIndex (selectedIndex) {
   render() {
   const buttons = ['Home', 'Past Quest', 'Next Quest', 'Stats']
   const { selectedIndex } = this.state
-  const list = [
-  {
-    title: 'Steps',
-    value: '2,867'
-  },
-  {
-    title: 'Distance',
-    value: '1 mile'
-  },
-  {
-    title: 'Elevation',
-    value: '1 mile'
-  },
-  {
-    title: 'Time',
-    value: '30 mins'
-  },
-  {
-    title: 'Avg Speed',
-    value: '10 mph'
-  }
-  
-]
     return (
       <View style={styles.container}>
          <Card containerStyle={{flexDirection: 'row', width: "100%",
@@ -77,14 +54,7 @@ updateIndex (selectedIndex) {
                   textStyle={{color: 'white', fontWeight: 'bold'}}
                 />
            
-           <Card containerStyle={{flexDirection: 'row', width: "100%",
-            height: 20, backgroundColor: 'rgba(49, 111,244, 1)',
-            borderColor: 'rgba(49, 111,244, 1)', justifyContent: 'space-around',
-            alignItems: 'stretch', marginTop: 0
-            }}>
               <Map style2={styles2.container} />
-            </Card>
-
         
       </View>  
     );

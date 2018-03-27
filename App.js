@@ -5,26 +5,42 @@ import RNSensors from 'react-native-sensors';
 import { Header, ButtonGroup, Button, Avatar, List, ListItem, Card, Input, Icon } from 'react-native-elements';
 import PropTypes from 'prop-types';
 
-const {Accelerometer, Gyroscope} = RNSensors;
+const {Accelerometer, Gyroscope, Orientation, StepCounter, Thermometer} = RNSensors;
+const { Magnetometer } = require('NativeModules');
 const accelerationObservable = new Accelerometer({
   updateInterval:100,
 });
-const instructions = Platform.select({
-    ios: 'Press Cmd+R to reload,\n' +
-      'Cmd+D or shake for dev menu',
-    android: 'Double tap R on your keyboard to reload,\n' +
-      'Shake or press menu button for dev menu',
-  });
+const gyroscopeObservable = new Gyroscope({
+  updateInterval:200,
+});
+// const magnetometerObservable = new Magnetometer({
+//   updateInterval:1000,
+// });
+// const stepCountObservable  = new StepCounter({
+//   // updateInterval:5000,
+// });
+
 
 type Props = {};
 export default class App extends Component<Props> {
 constructor () {
   super()
-  let x,y,z
-  let acceleration = {}
+  // let x,y,z
+  // let acceleration = {}
   this.state = {
     selectedIndex: 2,
+    stepCount: 0,
     acceleration:{
+      x:0,
+      y:0,
+      z:0
+    },
+    gyroscope:{
+      x:0,
+      y:0,
+      z:0
+    },
+    magnetometer:{
       x:0,
       y:0,
       z:0
@@ -42,12 +58,24 @@ componentDidMount(){
   accelerationObservable.subscribe(acceleration => this.setState({
     acceleration,
   }));
-}
+  gyroscopeObservable.subscribe(gyroscope => this.setState({
+    gyroscope,
+  }));
+  // magnetometerObservable.subscribe(magnetometer => this.setState({
+  //   magnetometer,
+  // }));
+  // stepCountObservable.subscre(stepcounter => this.setState({
+  //   stepcounter,
+  // }));
+}  
+
 
   render() {
     const {
       acceleration,
-      gyroscope
+      gyroscope,
+      magnetometer,
+      stepcounter
     }  = this.state;
   const buttons = ['Home', 'Past Quest', 'Next Quest', 'Stats']
   const { selectedIndex } = this.state
@@ -102,12 +130,24 @@ componentDidMount(){
                   justifyContent: 'flex-start', marginTop: 0}}
                   textStyle={{color: 'white', fontWeight: 'bold'}}
                 />
-              <Text>
+              <Card><Text>
                 Acceleration:
               </Text>
               <Text>
-                {this.state.acceleration.x + '/' + this.state.acceleration.y + '/' + this.state.acceleration.z}
+                {'x: ' + this.state.acceleration.x.toFixed(10) + '\ny: ' + this.state.acceleration.y.toFixed(10) + '\nz: ' + this.state.acceleration.z.toFixed(10)}
+              </Text></Card>  
+              <Card><Text>
+                Gyroscope:
               </Text>
+              <Text>
+                {'x: ' + this.state.gyroscope.x.toFixed(10) + '\ny: ' + this.state.gyroscope.y.toFixed(10) + '\nz: ' + this.state.gyroscope.z.toFixed(10)}
+              </Text></Card> 
+              <Card><Text>
+                Magnetometer:
+              </Text>
+              <Text>
+                {'x: ' + this.state.magnetometer.x.toFixed(10) + '\ny: ' + this.state.magnetometer.y.toFixed(10) + '\nz: ' + this.state.magnetometer.z.toFixed(10)}
+              </Text></Card> 
 
         
       </View>

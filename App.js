@@ -1,20 +1,40 @@
-import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
-import FitHeader from './components/FitHeader';
-import FitButtons from './components/FitButtons';
-import FitMap from './components/FitMap';
-import Camera from './components/Camera/camera.js';
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ * @flow
+ */
 
-//type Props = {};
+import React, { Component } from 'react';
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  View
+} from 'react-native';
+
+import {CameraKitCamera} from 'react-native-camera-kit';
+
+
+type Props = {};
 export default class App extends Component<Props> {
   render() {
     return (
-      <View style={styles.container}>
-        <FitHeader />
-        <FitButtons />
-        
-        <Camera />
-      </View>
+        <CameraKitCamera
+        ref={cam => this.camera = cam}
+        style={{
+          flex: 1,
+          backgroundColor: 'white'
+        }}
+        cameraOptions={{
+          flashMode: 'auto',             // on/off/auto(default)
+          focusMode: 'on',               // off/on(default)
+          zoomMode: 'on',                // off/on(default)
+          ratioOverlay:'1:1',            // optional, ratio overlay on the camera and crop the image seamlessly
+          ratioOverlayColor: '#00000077' // optional
+        }}
+        onReadQRCode={(event) => console.log(event.nativeEvent.qrcodeStringValue)} // optional
+      
+      />
     );
   }
 }
@@ -22,16 +42,8 @@ export default class App extends Component<Props> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'rgba(134, 249, 5, 1))',
+    justifyContent: 'center',
     alignItems: 'center',
-    justifyContent: "flex-start"
-    
+    backgroundColor: '#F5FCFF',
   }
-});
-
-const styles2 = StyleSheet.create({
-  container: {
-    height: '20%',
-    width: '100%'
-  },
 });

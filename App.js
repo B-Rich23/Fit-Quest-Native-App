@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, TouchableHighlight } from 'react-native';
+import FitMap from './components/FitMap';
 
 
 import { Header, ButtonGroup, Button, Avatar, List, ListItem, Card, Input, Icon } from 'react-native-elements';
@@ -78,7 +79,7 @@ updateIndex (selectedIndex) {
                   textStyle={{color: 'white', fontWeight: 'bold'}}
                 />
   
-        
+        <FitMap />
       </View>
     );
   }

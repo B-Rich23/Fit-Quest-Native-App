@@ -64,7 +64,7 @@ export default class App extends Component<Props> {
   }, null, { distanceFilter: 10 });
 
   this.state = { markers: [], watchID };
-  
+   
 }  
   render() {
     return (

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, TouchableHighlight, TouchableOpacity } from 'react-native';
 
-// import Camera from './camera.js';
+import Camera from './camera.js';
 
 import { Header, ButtonGroup, Button, Avatar, List, ListItem, Card, Input, Icon } from 'react-native-elements';
 

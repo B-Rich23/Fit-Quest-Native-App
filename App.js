@@ -107,7 +107,7 @@ addMarker(region) {
               coordinates={this.state.markers.map((marker) => marker.coordinates)}
               strokeWidth={5}
           /> }
-
+      {/* discard comment */}
       </MapView>
       <View style={styles.infoWrapper}>
           <RunInfoNumeric title="Distance" unit="mi"

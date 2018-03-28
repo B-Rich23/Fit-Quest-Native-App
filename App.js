@@ -29,6 +29,7 @@ export default class App extends Component<Props> {
       if (this.state.previousCoordinate) {
         distance = this.state.distance + haversine(this.state.previousCoordinate,
                                                    position.coords, { unit: 'mile' });
+        this.distanceInfo.setState({ value: distance });                                                   
       }
     
       this.speedInfo.setState({ value: position.coords.speed });
@@ -66,6 +67,28 @@ export default class App extends Component<Props> {
   this.state = { markers: [], watchID };
    
 }  
+
+componentWillUnmount() {
+  navigator.geolocation.stopWatch(this.state.watchID);
+}
+
+addMarker(region) {
+  let now = (new Date).getTime();
+  if (this.state.ladAddedMarker > now - 5000) {
+    return;
+  }
+
+  this.setState({
+    markers: [
+      ...this.state.markers, {
+        coordinate: region,
+        key: id++
+      }
+    ],
+    ladAddedMarker: now
+  });
+}  
+
   render() {
     return (
       <View style={{flex: 1}}>
@@ -75,7 +98,7 @@ export default class App extends Component<Props> {
               latitude: 37.78825,
               longitude: -122.4324,
               latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,
+              longitudeDelta: 0.0421
             }}
       >     
         <MapView.Polyline

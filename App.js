@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, TouchableHighlight } from 'react-native';
+import { Platform, StyleSheet, Text, View, TouchableHighlight, TouchableOpacity } from 'react-native';
 
+import Camera from './camera.js';
 
 import { Header, ButtonGroup, Button, Avatar, List, ListItem, Card, Input, Icon } from 'react-native-elements';
 
@@ -77,8 +78,15 @@ updateIndex (selectedIndex) {
                   justifyContent: 'flex-start', marginTop: 0}}
                   textStyle={{color: 'white', fontWeight: 'bold'}}
                 />
-  
-        
+            
+            <Card containerStyle={{flexDirection: 'row', width: "100%",
+              height: 20, backgroundColor: 'rgba(49, 111,244, 1)',
+              borderColor: 'rgba(49, 111,244, 1)', justifyContent: 'space-around',
+              alignItems: 'stretch', marginTop: 0
+              }}>
+                <Camera style2={styles2.container} />
+              </Card>
+                
       </View>
     );
   }
@@ -91,4 +99,11 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start"
     
   }
+});
+
+const styles2 = StyleSheet.create({
+  container: {
+    height: '20%',
+    width: '100%'
+  },
 });

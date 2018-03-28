@@ -19,13 +19,11 @@ class Camera extends React.Component {
   render() {
     // renderCamera() {
       return (
-        <View style={styles.container}>
+        
           <CameraKitCamera
           ref={cam => this.camera = cam}
-          style={{
-            flex: 1,
-            backgroundColor: 'white'
-          }}
+          style={styles.CameraScreen}
+            
           cameraOptions={{
             flashMode: 'auto',             // on/off/auto(default)
             focusMode: 'on',               // off/on(default)
@@ -34,30 +32,19 @@ class Camera extends React.Component {
             ratioOverlayColor: '#00000077' // optional
           }}
         />
-        </View>
+        
       );
     }
   }
 
 
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
+  const styles = StyleSheet.create({
+    CameraScreen: {
+      height: '70%',
+      width: '100%',
+      flex: 1,
+      backgroundColor: 'white'
+    },
+  });
 
 export default Camera;

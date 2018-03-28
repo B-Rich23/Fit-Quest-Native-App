@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import FitHeader from './components/FitHeader';
 import FitButtons from './components/FitButtons';
 import FitMap from './components/FitMap';
+import Camera from './components/Camera/camera.js';
 
 //type Props = {};
 export default class App extends Component<Props> {
@@ -11,7 +12,8 @@ export default class App extends Component<Props> {
       <View style={styles.container}>
         <FitHeader />
         <FitButtons />
-        <FitMap />
+        
+        <Camera />
       </View>
     );
   }

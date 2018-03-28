@@ -106,7 +106,8 @@ componentDidMount(){
                   justifyContent: 'flex-start', marginTop: 0}}
                   textStyle={{color: 'white', fontWeight: 'bold'}}
                 />
-              <Card><Text>
+              <Card>
+              <Text>
                 Acceleration:
               </Text>
               <Text>
@@ -130,6 +131,7 @@ componentDidMount(){
                   You went up {this.state.floorsAscended} floor{this.state.floorsAscended==1 ? '' : 's'}, and down {this.state.floorsDescended}.
                 </Text>
               </Card> */}
+              <Card>
               <Text>This is my app</Text>
                <TouchableHighlight
                 onPress={this.notification && this.notification.show({
@@ -141,7 +143,7 @@ componentDidMount(){
               <Text>Click me to trigger a notification</Text>
               </TouchableHighlight>
               <Notification ref={(ref) => { this.notification = ref; }} />
-
+            </Card>    
         
       </View>
 

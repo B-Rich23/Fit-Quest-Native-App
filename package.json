@@ -16,6 +16,7 @@
     "react-native-in-app-notification": "^2.2.0",
     "react-native-maps": "^0.20.1",
     "react-native-pedometer": "0.0.7",
+    "react-native-push-notification": "^3.0.2",
     "react-native-sensor-manager": "^0.1.10",
     "react-native-sensors": "^2.4.2",
     "react-native-vector-icons": "^4.5.0"

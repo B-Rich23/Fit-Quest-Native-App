@@ -15,7 +15,7 @@ import {
 import CameraKitCamera from 'react-native-camera-kit';
 
 type Props = {};
-export class Camera extends React.Component {
+class Camera extends React.Component {
   render() {
     // renderCamera() {
       return (
@@ -40,6 +40,7 @@ export class Camera extends React.Component {
   }
 
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -58,3 +59,5 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
 });
+
+export default Camera;

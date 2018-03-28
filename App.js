@@ -1,78 +1,101 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, TouchableHighlight } from 'react-native';
-import { Header, ButtonGroup, Button, Avatar, List, ListItem, Card, Input, Icon } from 'react-native-elements';
-// import MapView, { Polyline } from 'react-native-maps';
-import { Map } from "./Maps.js";
+import { Platform, StyleSheet, Text, View } from 'react-native';
+import MapView, { Polyline } from 'react-native-maps';
+import haversine from 'haversine';
+import { RunInfo } from "./run-info.js";
+import { RunInfoNumeric } from "./run-info-numeric.js";
 
-const instructions = Platform.select({
-    ios: 'Press Cmd+R to reload,\n' +
-      'Cmd+D or shake for dev menu',
-    android: 'Double tap R on your keyboard to reload,\n' +
-      'Shake or press menu button for dev menu',
-  });
+const styles = StyleSheet.create({
+  infoWrapper: {
+    position: 'absolute',
+    left: 0,
+    bottom: 0,
+    right: 0,
+    flexDirection: 'row',
+    flex: 1
+  }
+});
+
+let id = 0;
 
 type Props = {};
 export default class App extends Component<Props> {
-constructor () {
-  super()
-  this.state = {
-    selectedIndex: 2
-  }
-  this.updateIndex = this.updateIndex.bind(this)
-}
-updateIndex (selectedIndex) {
-  this.setState({selectedIndex})
-}
+  constructor(props) {
+    super(props);
+
+    let watchID = navigator.geolocation.watchPosition((position) => {
+      let distance = 0;
+
+      if (this.state.previousCoordinate) {
+        distance = this.state.distance + haversine(this.state.previousCoordinate,
+                                                   position.coords, { unit: 'mile' });
+      }
+    
+      this.speedInfo.setState({ value: position.coords.speed });
+    
+      let x = position.coords.heading;
+      if ((x > 0 && x <= 23) || (x > 338 && x <= 360))
+        this.directionInfo.setState({ value: 'N' });
+      else if (x > 23 && x <= 65)
+        this.directionInfo.setState({ value: 'NE' });
+      else if (x > 65 && x <= 110)
+        this.directionInfo.setState({ value: 'E' });
+      else if (x > 110 && x <= 155)
+        this.directionInfo.setState({ value: 'SE' });
+      else if (x > 155 && x <= 203)
+        this.directionInfo.setState({ value: 'S' });
+      else if (x > 203 && x <= 248)
+        this.directionInfo.setState({ value: 'SW' });
+      else if (x > 248 && x <= 293)
+        this.directionInfo.setState({ value: 'W' });
+      else if (x > 293 && x <= 338)
+        this.directionInfo.setState({ value: 'NW' });
+    
+      this.setState({
+        markers: [
+          ...this.state.markers, {
+            coordinate: position.coords,
+            key: id++
+          }
+        ],
+        previousCoordinate: position.coords,
+        distance
+      });
+  }, null, { distanceFilter: 10 });
+
+  this.state = { markers: [], watchID };
+  
+}  
   render() {
-  const buttons = ['Home', 'Past Quest', 'Next Quest', 'Stats']
-  const { selectedIndex } = this.state
     return (
-      <View style={styles.container}>
-         <Card containerStyle={{flexDirection: 'row', width: "100%",
-            height: 60, backgroundColor: 'rgba(49, 111,244, 1)',
-            borderColor: 'rgba(49, 111,244, 1)', justifyContent: 'space-around',
-            alignItems: 'stretch', marginTop: 0
-            }}> 
-              <Header
-                  statusBarProps={{ barStyle: 'light-content' }}
-                  centerComponent={{ text: 'FitQuest', style: { color: '#fff',
-                  fontWeight: 'bold', fontSize: 20, marginTop: 10 } }}
-                  outerContainerStyles={{ backgroundColor: 'rgba(49, 111,244, 1)',
-                   flexDirection: 'row', borderColor: 'rgba(49, 111,244, 1)',
-                   width: '100%', justifyContent: 'space-around', alignItems: 'center' }}
-                  innerContainerStyles={{ justifyContent: 'space-between' }}/>
-            </Card>
-            
-                <ButtonGroup
-                  onPress={this.updateIndex}
-                  selectedIndex={selectedIndex}
-                  buttons={buttons}
-                  buttonStyle={{justifyContent: 'center', width: '100%'}}
-                  containerStyle={{height: 70, width: '100%',
-                  backgroundColor: 'rgba(49, 111,244, 1)',
-                  justifyContent: 'flex-start', marginTop: 0}}
-                  textStyle={{color: 'white', fontWeight: 'bold'}}
-                />
-           
-              <Map style2={styles2.container} />
-        
-      </View>  
+      <View style={{flex: 1}}>
+          <MapView style={styles.map}
+            showsUserLocation
+            initialRegion={{
+              latitude: 37.78825,
+              longitude: -122.4324,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}
+      >     
+        <MapView.Polyline
+          coordinates={this.state.markers.map((marker) => marker.coordinates)}
+          strokeWidth={5}
+        />
+        </MapView>
+        <View style={styles.infoWrapper}>
+          <RunInfoNumeric title="Distance" unit="mi"
+            ref={(info) => this.distanceInfo = info}
+          />
+          <RunInfoNumeric title="Speed" unit="mi/h"
+            ref={(info) => this.distranceInfo = info}
+          />
+          <RunInfo title="Direction"
+            value='NE'
+            ref={(info) => this.directionInfo = info}
+          />
+        </View>
+      </View>
     );
   }
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'rgba(134, 249, 5, 1))',
-    alignItems: 'center',
-    justifyContent: "flex-start"
-    
-  }
-});
-
-const styles2 = StyleSheet.create({
-  container: {
-    height: '20%',
-    width: '100%'
-  },
-});

@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
 import MapView, { Polyline } from 'react-native-maps';
 import haversine from 'haversine';
-import { RunInfo } from "./run-info.js";
-import { RunInfoNumeric } from "./run-info-numeric.js";
+import RunInfo from "./run-info.js";
+import RunInfoNumeric from "./run-info-numeric.js";
 
 const styles = StyleSheet.create({
   infoWrapper: {
@@ -92,21 +92,24 @@ addMarker(region) {
   render() {
     return (
       <View style={{flex: 1}}>
-          <MapView style={styles.map}
-            showsUserLocation
-            initialRegion={{
-              latitude: 37.78825,
-              longitude: -122.4324,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421
-            }}
-      >     
-        <MapView.Polyline
-          coordinates={this.state.markers.map((marker) => marker.coordinates)}
-          strokeWidth={5}
-        />
-        </MapView>
-        <View style={styles.infoWrapper}>
+     
+      <MapView style={styles.map}
+          showsUserLocation
+          initialRegion={{
+            latitude: 37.78825,
+            longitude: -122.4324,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}> 
+          
+          { this.state.isMapReady && 
+            <MapView.Polyline
+              coordinates={this.state.markers.map((marker) => marker.coordinates)}
+              strokeWidth={5}
+          /> }
+
+      </MapView>
+      <View style={styles.infoWrapper}>
           <RunInfoNumeric title="Distance" unit="mi"
             ref={(info) => this.distanceInfo = info}
           />
@@ -117,7 +120,8 @@ addMarker(region) {
             value='NE'
             ref={(info) => this.directionInfo = info}
           />
-        </View>
+          </View>
+          <Text> "Hello World"</Text>
       </View>
     );
   }

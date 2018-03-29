@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, ScrollView } from 'react-native';
 import FitHeader from './components/FitHeader';
 import FitButtons from './components/FitButtons';
 import FitMap from './components/FitMap';
 import FitFooter from './components/FitFooter';
+import Authentication from './components/Authentication';
+import FitHome from './components/FitHome';
+import FitStats from './components/FitStats';
 
 
 //type Props = {};

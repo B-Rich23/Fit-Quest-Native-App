@@ -12,39 +12,35 @@ import {
   View
 } from 'react-native';
 
-import CameraKitCamera from 'react-native-camera-kit';
+import {CameraKitCameraScreen} from 'react-native-camera-kit';
 
-type Props = {};
+
 class Camera extends React.Component {
   render() {
-    // renderCamera() {
-      return (
-        
-          <CameraKitCamera
-          ref={cam => this.camera = cam}
-          style={styles.CameraScreen}
-            
-          cameraOptions={{
-            flashMode: 'auto',             // on/off/auto(default)
-            focusMode: 'on',               // off/on(default)
-            zoomMode: 'on',                // off/on(default)
-            ratioOverlay:'1:1',            // optional, ratio overlay on the camera and crop the image seamlessly
-            ratioOverlayColor: '#00000077' // optional
-          }}
-        />
-        
-      );
-    }
+    return (
+      <CameraKitCameraScreen style={styles.container}
+      actions={{ rightButtonText: 'Done', leftButtonText: 'Cancel' }}
+      onBottomButtonPressed={(event) => this.onBottomButtonPressed(event)}
+      scanBarcode={false}
+      laserColor={"blue"}
+      frameColor={"yellow"}
+  
+      hideControls={false}           //(default false) optional, hide buttons and additional controls on top and bottom of screen
+      showFrame={false}   //(default false) optional, show frame with transparent layer (qr code or barcode will be read on this area ONLY), start animation for scanner,that stoped when find any code. Frame always at center of the screen
+      />
+    );
   }
+}
 
-
-  const styles = StyleSheet.create({
-    CameraScreen: {
-      height: '70%',
-      width: '100%',
-      flex: 1,
-      backgroundColor: 'white'
-    },
-  });
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    height: '100%',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  }
+});
 
 export default Camera;

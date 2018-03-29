@@ -31,24 +31,13 @@ const styles3 = StyleSheet.create({
     right: 0,
     bottom: 0,
   },
-
+});
 let id = 0;
 
 type Props = {};
 export default class App extends Component<Props> {
   constructor(props) {
     super(props);
-
-    this.state = {
-      region: {
-        latitude: LATITUDE,
-        longitude: LONGITUDE,
-        latitudeDelta: LATITUDE_DELTA,
-        longitudeDelta: LONGITUDE_DELTA,
-      }
-    }
-
-
 
     let watchID = navigator.geolocation.watchPosition((position) => {
       let distance = 0;
@@ -95,13 +84,8 @@ export default class App extends Component<Props> {
    
 }  
 
-componentDidMount() {
-  
-}
-
-
 componentWillUnmount() {
-  navigator.geolocation.(this.state.watchID);
+  navigator.geolocation.stopWatch(this.state.watchID);
 }
 
 addMarker(region) {
@@ -134,12 +118,11 @@ addMarker(region) {
             longitudeDelta: 0.0421
           }}> 
         
-    
             <MapView.Polyline
               coordinates={this.state.markers.map((marker) => marker.coordinates)}
               strokeWidth={5}
         /> 
-      {/* discard comment */}
+      
       </MapView>
       <View style={styles.infoWrapper}>
           <RunInfoNumeric title="Distance" unit="mi"

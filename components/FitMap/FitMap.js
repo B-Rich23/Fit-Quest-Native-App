@@ -1,48 +1,77 @@
-import React from 'react';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
-
-import MapView, { Polyline } from 'react-native-maps';
+import React, { Component } from 'react';
+import { AppRegistry, StyleSheet, View, Dimensions } from 'react-native';
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+// import RetroMapStyles from './MapStyles/RetroMapStyles.json';
 import styles from './MapStyles.js';
 
-class FitMap extends React.Component {
+let { width, height } = Dimensions.get('window');
+const ASPECT_RATIO = width / height;
+const LATITUDE = 0;
+const LONGITUDE = 0;
+const LATITUDE_DELTA = 0.0922;
+const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
+
+class FitMap extends Component {
+  constructor() {
+    super();
+    this.state = {
+      region: {
+        latitude: LATITUDE,
+        longitude: LONGITUDE,
+        latitudeDelta: LATITUDE_DELTA,
+        longitudeDelta: LONGITUDE_DELTA,
+      }
+    };
+  }
+  componentDidMount() {
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        this.setState({
+          region: {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+            latitudeDelta: LATITUDE_DELTA,
+            longitudeDelta: LONGITUDE_DELTA,
+          }
+        });
+      },
+    (error) => console.log(error.message),
+    { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+    );
+    this.watchID = navigator.geolocation.watchPosition(
+      position => {
+        this.setState({
+          region: {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+            latitudeDelta: LATITUDE_DELTA,
+            longitudeDelta: LONGITUDE_DELTA,
+          }
+        });
+      }
+    );
+  }
+  componentWillUnmount() {
+    navigator.geolocation.clearWatch(this.watchID);
+  }
+
   render() {
     return (
       <MapView
-        style={styles.container} 
-        initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }} >
-        <Polyline
-        coordinates={[
-          { latitude: 37.8025259, longitude: -122.4351431 },
-          { latitude: 37.7896386, longitude: -122.421646 },
-          { latitude: 37.7665248, longitude: -122.4161628 },
-          { latitude: 37.7734153, longitude: -122.4577787 },
-          { latitude: 37.7948605, longitude: -122.4596065 },
-          { latitude: 37.8025259, longitude: -122.4351431 }
-        ]}
-        strokeColor="#000" // fallback for when `strokeColors` is not supported by the map-provider
-        strokeColors={[
-          '#7F0000',
-          '#00000000', // no color, creates a "long" gradient between the previous and next coordinate
-          '#B24112',
-          '#E5845C',
-          '#238C23',
-          '#7F0000'
-        ]}
-        strokeWidth={6}
-      />
+        provider={ PROVIDER_GOOGLE }
+        style={ styles.container }
+        showsUserLocation={ true }
+        region={ this.state.region }
+        onRegionChange={ region => this.setState({region}) }
+        onRegionChangeComplete={ region => this.setState({region}) }
+      >
+        <MapView.Marker
+          coordinate={ this.state.region }
+        />
       </MapView>
     );
   }
 }
+
 
 export default FitMap; 

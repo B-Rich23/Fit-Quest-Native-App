@@ -16,12 +16,39 @@ const styles = StyleSheet.create({
   }
 });
 
+const styles2 = StyleSheet.create({
+  container: {
+    height: '60%',
+    width: '100%'
+  },
+});
+
+const styles3 = StyleSheet.create({
+  map: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+
 let id = 0;
 
 type Props = {};
 export default class App extends Component<Props> {
   constructor(props) {
     super(props);
+
+    this.state = {
+      region: {
+        latitude: LATITUDE,
+        longitude: LONGITUDE,
+        latitudeDelta: LATITUDE_DELTA,
+        longitudeDelta: LONGITUDE_DELTA,
+      }
+    }
+
+
 
     let watchID = navigator.geolocation.watchPosition((position) => {
       let distance = 0;
@@ -68,8 +95,13 @@ export default class App extends Component<Props> {
    
 }  
 
+componentDidMount() {
+  
+}
+
+
 componentWillUnmount() {
-  navigator.geolocation.stopWatch(this.state.watchID);
+  navigator.geolocation.(this.state.watchID);
 }
 
 addMarker(region) {
@@ -93,20 +125,20 @@ addMarker(region) {
     return (
       <View style={{flex: 1}}>
      
-      <MapView style={styles.map}
+      <MapView style={styles3.map}
           showsUserLocation
           initialRegion={{
-            latitude: 37.78825,
-            longitude: -122.4324,
+            latitude: 37.87177045341297,
+            longitude: -122.27057977511595,
             latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
+            longitudeDelta: 0.0421
           }}> 
-          
-          { this.state.isMapReady && 
+        
+    
             <MapView.Polyline
               coordinates={this.state.markers.map((marker) => marker.coordinates)}
               strokeWidth={5}
-          /> }
+        /> 
       {/* discard comment */}
       </MapView>
       <View style={styles.infoWrapper}>

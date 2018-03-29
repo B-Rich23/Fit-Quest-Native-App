@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
-import MapView, { Polyline } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, Polyline } from 'react-native-maps';
 import haversine from 'haversine';
 import RunInfo from "./run-info.js";
 import RunInfoNumeric from "./run-info-numeric.js";
+import RetroMapStyles from "./RetroMapStyles.json";
 
 const styles = StyleSheet.create({
   infoWrapper: {
@@ -105,24 +106,33 @@ addMarker(region) {
   });
 }  
 
+getInitialState() {
+  return {
+    region: {
+      latitude: 37.87177045341297,
+      longitude: -122.27057977511595,
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0421,
+    },
+  };
+}
+
+onRegionChange(region) {
+  this.setState({ region });
+}
+
   render() {
     return (
       <View style={{flex: 1}}>
      
-      <MapView style={styles3.map}
-          showsUserLocation
-          initialRegion={{
-            latitude: 37.87177045341297,
-            longitude: -122.27057977511595,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421
-          }}> 
-        
-            <MapView.Polyline
-              coordinates={this.state.markers.map((marker) => marker.coordinates)}
-              strokeWidth={5}
-        /> 
-      
+      <MapView 
+        style={styles3.map}
+        customMapStyle={ RetroMapStyles }
+        showsUserLocation
+        provider={ PROVIDER_GOOGLE }
+        region={this.state.region}
+        onRegionChange={this.onRegionChange}> 
+            
       </MapView>
       <View style={styles.infoWrapper}>
           <RunInfoNumeric title="Distance" unit="mi"
